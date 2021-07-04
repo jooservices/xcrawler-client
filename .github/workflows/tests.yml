@@ -18,4 +18,4 @@ jobs:
         run: composer lint
 
       - name: Execute tests
-        run: vendor/bin/phpunit --coverage-text
+        run: vendor/bin/phpunit src
