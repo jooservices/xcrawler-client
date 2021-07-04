@@ -22,7 +22,13 @@
         "mockery/mockery": "^1.4",
         "kevinrob/guzzle-cache-middleware": "^3.3",
         "league/flysystem": "^1",
-        "fakerphp/faker": "^1.14"
+        "fakerphp/faker": "^1.14",
+        "phpstan/phpstan": "^0.12"
+    },
+    "scripts": {
+        "lint": [
+            "@php vendor/bin/phpstan analyze --level=0 app"
+        ]
     },
     "authors": [
         {
