@@ -5,7 +5,8 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Jooservices\\XcrawlerClient\\": "src/"
+            "Jooservices\\XcrawlerClient\\": "src/",
+            "Jooservices\\XcrawlerClient\\Tests\\": "tests/"
         }
     },
     "require": {
@@ -23,7 +24,9 @@
         "kevinrob/guzzle-cache-middleware": "^3.3",
         "league/flysystem": "^1",
         "fakerphp/faker": "^1.14",
-        "phpstan/phpstan": "^0.12"
+        "phpstan/phpstan": "^0.12",
+        "squizlabs/php_codesniffer": "^3.6",
+        "friendsofphp/php-cs-fixer": "^2.18"
     },
     "scripts": {
         "lint": [

@@ -2,9 +2,11 @@
 
 namespace Jooservices\XcrawlerClient\Interfaces;
 
+use Jooservices\XcrawlerClient\Settings\RequestOptions;
+
 interface XCrawlerClientInterface
 {
-    public function init(ResponseInterface $response, array $options = [], array $clientOptions = []): self;
+    public function init(ResponseInterface $response, array $options = [], RequestOptions $requestOptions = null): self;
 
     public function getResponse(): ResponseInterface;
 

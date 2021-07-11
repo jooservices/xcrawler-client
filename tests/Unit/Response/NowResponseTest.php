@@ -1,8 +1,9 @@
 <?php
 
-namespace Jooservices\XcrawlerClient\Tests;
+namespace Jooservices\XcrawlerClient\Tests\Unit\Response;
 
 use Jooservices\XcrawlerClient\Response\NowResponse;
+use Jooservices\XcrawlerClient\Tests\TestCase;
 
 class NowResponseTest extends TestCase
 {

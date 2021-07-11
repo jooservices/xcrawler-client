@@ -6,8 +6,9 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use Jooservices\XcrawlerClient\Interfaces\ResponseInterface;
+use Jooservices\XcrawlerClient\Interfaces\SettingsContainerInterface;
 use Jooservices\XcrawlerClient\Interfaces\XCrawlerClientInterface;
-use Jooservices\XcrawlerClient\Request\Options;
+use Jooservices\XcrawlerClient\Settings\RequestOptions;
 
 /**
  * Wrapped factory to make request with customized options
@@ -15,14 +16,14 @@ use Jooservices\XcrawlerClient\Request\Options;
 class XCrawlerClient implements XCrawlerClientInterface
 {
     private array $options;
-    private array $clientOptions;
+    private SettingsContainerInterface $requestOptions;
     private Client $client;
     private ResponseInterface $response;
     private Factory $factory;
     private array $headers;
     private string $contentType;
 
-    public function init(ResponseInterface $response, array $options = [], array $clientOptions = []): self
+    public function init(ResponseInterface $response, array $options = [], RequestOptions $requestOptions = null): self
     {
         $this->response = $response;
         $this->options = array_merge($this->options ??
@@ -39,11 +40,11 @@ class XCrawlerClient implements XCrawlerClientInterface
                 ],
             ]
             , $options);
-        $this->clientOptions = array_merge((new Options())->options, $clientOptions);
+        $this->requestOptions = $requestOptions ?? new RequestOptions();
         $this->factory = new Factory($this->options['logger']['instance'] ?? null, $options['isFake'] ?? null);
         $this->factory
             ->enableRetries($this->options['maxRetries'], $this->options['delayInSec'], $this->options['minErrorCode'])
-            ->addOptions($clientOptions);
+            ->addOptions($this->requestOptions->toArray());
 
         if ($this->options['logger']['instance']) {
             $this->factory->enableLogging($this->options['options']['logger']['instance'] ?? Formatter::DEFAULT_FORMAT);
@@ -90,7 +91,7 @@ class XCrawlerClient implements XCrawlerClientInterface
      */
     public function setOptions(array $options): self
     {
-        $this->clientOptions = array_merge($this->clientOptions ?? [], $options);
+        $this->requestOptions->fromIterable($options);
 
         return $this;
     }
@@ -182,7 +183,7 @@ class XCrawlerClient implements XCrawlerClientInterface
         /**
          * Request options
          */
-        $options = array_merge($this->clientOptions ?? [], ['headers' => $this->headers ?? []]);
+        $options = array_merge($this->requestOptions->toArray(), ['headers' => $this->headers ?? []]);
 
         if (isset($this->headers['auth'])) {
             $options['auth'] = $this->headers['auth'];
