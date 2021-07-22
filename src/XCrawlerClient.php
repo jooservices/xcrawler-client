@@ -26,7 +26,8 @@ class XCrawlerClient implements XCrawlerClientInterface
     public function init(ResponseInterface $response, array $options = [], RequestOptions $requestOptions = null): self
     {
         $this->response = $response;
-        $this->options = array_merge($this->options ??
+        $this->options = array_merge(
+            $this->options ??
             [
                 'maxRetries' => 3,
                 'delayInSec' => 1,
@@ -38,8 +39,9 @@ class XCrawlerClient implements XCrawlerClientInterface
                 'caching' => [
                     'instance' => null
                 ],
-            ]
-            , $options);
+            ],
+            $options
+        );
         $this->requestOptions = $requestOptions ?? new RequestOptions();
         $this->factory = new Factory($this->options['logger']['instance'] ?? null, $options['isFake'] ?? null);
         $this->factory

@@ -41,6 +41,7 @@ use Jooservices\XcrawlerClient\Settings\Traits\UserAgent;
 class RequestOptions extends AbstractSettingsContainer
 {
     use UserAgent;
+
     public function __construct(iterable $properties = null)
     {
         $this->fromIterable([
