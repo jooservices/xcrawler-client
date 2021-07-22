@@ -49,11 +49,11 @@ class XCrawlerClient implements XCrawlerClientInterface
             ->addOptions($this->requestOptions->toArray());
 
         if ($this->options['logger']['instance']) {
-            $this->factory->enableLogging($this->options['options']['logger']['instance'] ?? Formatter::DEFAULT_FORMAT);
+            $this->factory->enableLogging($this->options['logger']['instance'] ?? Formatter::DEFAULT_FORMAT);
         }
 
         if ($this->options['caching']['instance']) {
-            $this->factory->enableCache($this->options['options']['caching']['instance']);
+            $this->factory->enableCache($this->options['caching']['instance']);
         }
 
         /**
