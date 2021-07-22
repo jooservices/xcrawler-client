@@ -15,13 +15,13 @@ use Jooservices\XcrawlerClient\Settings\RequestOptions;
  */
 class XCrawlerClient implements XCrawlerClientInterface
 {
-    private array $options;
-    private SettingsContainerInterface $requestOptions;
-    private Client $client;
-    private ResponseInterface $response;
-    private Factory $factory;
-    private array $headers;
-    private string $contentType;
+    protected array $options;
+    protected SettingsContainerInterface $requestOptions;
+    protected Client $client;
+    protected ResponseInterface $response;
+    protected Factory $factory;
+    protected array $headers;
+    protected string $contentType;
 
     public function init(ResponseInterface $response, array $options = [], RequestOptions $requestOptions = null): self
     {
@@ -232,7 +232,7 @@ class XCrawlerClient implements XCrawlerClientInterface
      *
      * @return array
      */
-    private function convertToUTF8(array $array): array
+    protected function convertToUTF8(array $array): array
     {
         array_walk_recursive($array, function (&$item) {
             if (!mb_detect_encoding($item, 'utf-8', true)) {

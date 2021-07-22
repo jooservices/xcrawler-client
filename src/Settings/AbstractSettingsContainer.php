@@ -5,7 +5,7 @@ namespace Jooservices\XcrawlerClient\Settings;
 use Jooservices\XcrawlerClient\Interfaces\SettingsContainerInterface;
 use ReflectionProperty;
 
-abstract class AbstractSettingsContainer implements  SettingsContainerInterface
+abstract class AbstractSettingsContainer implements SettingsContainerInterface
 {
     /**
      * SettingsContainerAbstract constructor.
@@ -82,7 +82,7 @@ abstract class AbstractSettingsContainer implements  SettingsContainerInterface
 
     public function fromIterable(iterable $properties): SettingsContainerInterface
     {
-        foreach($properties as $key => $value){
+        foreach ($properties as $key => $value) {
             $this->__set($key, $value);
         }
 
