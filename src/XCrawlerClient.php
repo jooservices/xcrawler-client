@@ -49,7 +49,7 @@ class XCrawlerClient implements XCrawlerClientInterface
             ->addOptions($this->requestOptions->toArray());
 
         if ($this->options['logger']['instance']) {
-            $this->factory->enableLogging($this->options['logger']['instance'] ?? Formatter::DEFAULT_FORMAT);
+            $this->factory->enableLogging($this->options['logger']['formatter'] ?? Formatter::DEFAULT_FORMAT);
         }
 
         if ($this->options['caching']['instance']) {
