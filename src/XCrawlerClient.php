@@ -214,6 +214,7 @@ class XCrawlerClient implements XCrawlerClientInterface
             $response = $this->client->request($method, $endpoint, $options);
             $this->response->body = (string)$response->getBody();
             $this->response->headers = $response->getHeaders();
+            $this->response->responseCode = $response->getStatusCode();
             $this->response->loadData();
         } catch (GuzzleException | ClientException $e) {
             $this->response->responseSuccess = false;

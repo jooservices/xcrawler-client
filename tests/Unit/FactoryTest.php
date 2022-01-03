@@ -106,6 +106,15 @@ class FactoryTest extends TestCase
         $this->assertEquals(0, count($this->factory->getHistory($client)));
     }
 
+    public function test_get_status_code()
+    {
+        $factory = new Factory($this->logger, 202);
+        $client = $factory->enableRetries(2, 0.001, 200)->make();
+        $response = $client->request('get', $this->faker->url);
+        $this->assertEquals(202, $response->getStatusCode());
+        $this->assertEquals(0, count($this->factory->getHistory($client)));
+    }
+
     public function test_exception_with_no_logger_instance()
     {
         $factory = new Factory(null, 200);
