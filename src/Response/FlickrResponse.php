@@ -2,31 +2,26 @@
 
 namespace Jooservices\XcrawlerClient\Response;
 
-use Jooservices\XcrawlerClient\Interfaces\ResponseInterface;
-use Jooservices\XcrawlerClient\Response\Traits\DefaultResponse;
-
-class FlickrResponse implements ResponseInterface
+class FlickrResponse extends AbstractBaseResponse
 {
-    use DefaultResponse;
-
-    public function loadData()
+    public function loadData(): self
     {
-        $this->data = json_decode($this->body, true);
+        $this->data = json_decode($this->getBody(), true);
         if (!$this->data) {
-            $this->responseSuccess = false;
-            $this->responseMessage = 'Unable to decode Flickr response';
+            $this->isSucceed = false;
             $this->data = null;
-            return;
+            return $this;
         }
 
         if ($this->data['stat'] === 'fail') {
-            $this->responseSuccess = false;
-            $this->responseMessage = 'Request failed';
+            $this->isSucceed = false;
             $this->data = null;
-            return;
+            return $this;
         }
 
         $this->data = $this->cleanTextNodes($this->data);
+
+        return $this;
     }
 
     private function cleanTextNodes($arr)

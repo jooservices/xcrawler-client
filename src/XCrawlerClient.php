@@ -5,10 +5,11 @@ namespace Jooservices\XcrawlerClient;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
-use Jooservices\XcrawlerClient\Interfaces\ResponseInterface;
 use Jooservices\XcrawlerClient\Interfaces\SettingsContainerInterface;
 use Jooservices\XcrawlerClient\Interfaces\XCrawlerClientInterface;
 use Jooservices\XcrawlerClient\Settings\RequestOptions;
+use Psr\Http\Message\ResponseInterface;
+use ReflectionObject;
 
 /**
  * Wrapped factory to make request with customized options
@@ -43,7 +44,7 @@ class XCrawlerClient implements XCrawlerClientInterface
             $options
         );
         $this->requestOptions = $requestOptions ?? new RequestOptions();
-        $this->factory = new Factory($this->options['logger']['instance'] ?? null, $options['isFake'] ?? null);
+        $this->factory = new Factory($options['isFake'] ?? null);
         $this->factory
             ->enableRetries($this->options['maxRetries'], $this->options['delayInSec'], $this->options['minErrorCode'])
             ->addOptions($this->requestOptions->toArray());
@@ -206,21 +207,18 @@ class XCrawlerClient implements XCrawlerClientInterface
             }
         }
 
-        $this->response->reset();
-        $this->response->endpoint = $endpoint;
-        $this->response->request = $payload;
 
         try {
             $response = $this->client->request($method, $endpoint, $options);
-            $this->response->body = (string)$response->getBody();
-            $this->response->headers = $response->getHeaders();
-            $this->response->responseCode = $response->getStatusCode();
-            $this->response->loadData();
-        } catch (GuzzleException|ClientException $e) {
-            $this->response->responseSuccess = false;
-            $this->response->responseCode = $e->getCode();
-            $this->response->responseMessage = $e->getMessage();
-            $this->response->body = $e->getResponse()->getBody()->getContents();
+            $this->response->reset(
+                $response->getStatusCode(),
+                $response->getHeaders(),
+                $response->getBody(),
+                $response->getProtocolVersion(),
+                $response->getReasonPhrase()
+            );
+        } catch (GuzzleException|ClientException) {
+            $this->response->isSucceed = false;
         } finally {
             return $this->response;
         }

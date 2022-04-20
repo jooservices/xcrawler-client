@@ -10,8 +10,7 @@ class JsonResponseTest extends TestCase
     public function test_succeed()
     {
         $response = new JsonResponse();
-        $response->body = json_encode(['stat' => 'ok']);
-        $response->loadData();
+        $response->reset(200,[],json_encode(['stat' => 'ok']));
 
         $this->assertIsArray($response->getData());
     }
@@ -19,8 +18,6 @@ class JsonResponseTest extends TestCase
     public function test_failed()
     {
         $response = new JsonResponse();
-        $response->body = null;
-        $response->loadData();
 
         $this->assertNull($response->getData());
     }

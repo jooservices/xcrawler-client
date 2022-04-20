@@ -151,9 +151,9 @@ class Formatter implements MessageFormatterInterface
                         break;
                     default:
                         // handle prefixed dynamic headers
-                        if (\strpos($matches[1], 'req_header_') === 0) {
+                        if (str_starts_with($matches[1], 'req_header_')) {
                             $result = $request->getHeaderLine(\substr($matches[1], 11));
-                        } elseif (\strpos($matches[1], 'res_header_') === 0) {
+                        } elseif (str_starts_with($matches[1], 'res_header_')) {
                             $result = $response
                                 ? $response->getHeaderLine(\substr($matches[1], 11))
                                 : 'NULL';

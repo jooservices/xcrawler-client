@@ -10,8 +10,7 @@ class NowResponseTest extends TestCase
     public function test_succeed()
     {
         $response = new NowResponse();
-        $response->body = json_encode(['result' => 'success']);
-        $response->loadData();
+        $response->reset(200,[],json_encode(['result' => 'success']));
 
         $this->assertIsArray($response->getData());
     }
@@ -19,8 +18,7 @@ class NowResponseTest extends TestCase
     public function test_failed()
     {
         $response = new NowResponse();
-        $response->body = json_encode(['result' => 'false']);
-        $response->loadData();
+        $response->reset(200,[],json_encode(['result' => 'false']));
 
         $this->assertNull($response->getData());
     }

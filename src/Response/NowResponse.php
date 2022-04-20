@@ -4,16 +4,19 @@ namespace Jooservices\XcrawlerClient\Response;
 
 class NowResponse extends JsonResponse
 {
-    public function loadData()
+    public function loadData(): self
     {
         parent::loadData();
+
         if ($this->data['result'] !== 'success') {
-            $this->responseSuccess = false;
+            $this->isSucceed = false;
             $this->data = null;
 
-            return;
+            return $this;
         }
 
         $this->data = $this->data['reply'] ?? [];
+
+        return $this;
     }
 }

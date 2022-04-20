@@ -9,7 +9,6 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Response;
-use LogicException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
@@ -20,11 +19,7 @@ use Psr\Log\LogLevel;
  */
 class Factory
 {
-    /**
-     * @var HandlerStack
-     */
     private HandlerStack $handler;
-
     private array $options;
     private Client $client;
     private array $history = [];
@@ -42,8 +37,11 @@ class Factory
         return $this;
     }
 
-    public function enableLogging(LoggerInterface $logger, string $format = Formatter::DEFAULT_FORMAT, string $level = LogLevel::INFO): self
-    {
+    public function enableLogging(
+        LoggerInterface $logger,
+        string $format = Formatter::DEFAULT_FORMAT,
+        string $level = LogLevel::INFO
+    ): self {
         $this->logger = $logger;
 
         return $this->withMiddleware(
@@ -75,7 +73,7 @@ class Factory
         return $this;
     }
 
-    public function make()
+    public function make(): Client
     {
         $this->client = new Client(
             ['handler' => $this->handler]
@@ -110,7 +108,7 @@ class Factory
         return $this->history[spl_object_id($client)] ?? [];
     }
 
-    public function reset()
+    public function reset(): self
     {
         if ($this->fakeResponseCode) {
             $mockHandler = new MockHandler;
@@ -130,5 +128,7 @@ class Factory
          * Init default
          */
         $this->handler = HandlerStack::create($mockHandler ?? null);
+
+        return $this;
     }
 }

@@ -3,6 +3,7 @@
 namespace Jooservices\XcrawlerClient\Interfaces;
 
 use Jooservices\XcrawlerClient\Settings\RequestOptions;
+use Psr\Http\Message\ResponseInterface;
 
 interface XCrawlerClientInterface
 {

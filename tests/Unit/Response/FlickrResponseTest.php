@@ -10,8 +10,7 @@ class FlickrResponseTest extends TestCase
     public function test_succeed()
     {
         $response = new FlickrResponse();
-        $response->body = json_encode(['stat' => 'ok']);
-        $response->loadData();
+        $response->reset(200,[],json_encode(['stat' => 'ok']));
 
         $this->assertIsArray($response->getData());
     }
@@ -19,8 +18,7 @@ class FlickrResponseTest extends TestCase
     public function test_failed()
     {
         $response = new FlickrResponse();
-        $response->body = json_encode(['stat' => 'fail']);
-        $response->loadData();
+        $response->reset(200,[],json_encode(['stat' => 'fail']));
 
         $this->assertNull($response->getData());
     }

@@ -2,15 +2,12 @@
 
 namespace Jooservices\XcrawlerClient\Response;
 
-use Jooservices\XcrawlerClient\Interfaces\ResponseInterface;
-use Jooservices\XcrawlerClient\Response\Traits\DefaultResponse;
-
-class JsonResponse implements ResponseInterface
+class JsonResponse extends AbstractBaseResponse
 {
-    use DefaultResponse;
-
-    public function loadData()
+    public function loadData(): self
     {
-        $this->data = json_decode($this->body, true);
+        $this->data = json_decode($this->getBody(), true);
+
+        return $this;
     }
 }

@@ -25,8 +25,8 @@
         "fakerphp/faker": "^1",
         "phpstan/phpstan": "^1.5",
         "squizlabs/php_codesniffer": "^3.6",
-        "friendsofphp/php-cs-fixer": "^2.1",
-        "rector/rector": "^0.12"
+        "friendsofphp/php-cs-fixer": "*",
+        "rector/rector": "*"
     },
     "scripts": {
         "lint": [
