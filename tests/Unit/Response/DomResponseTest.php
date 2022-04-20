@@ -3,8 +3,8 @@
 namespace Jooservices\XcrawlerClient\Tests\Unit\Response;
 
 use Jooservices\XcrawlerClient\Response\DomResponse;
-use Jooservices\XcrawlerClient\Settings\RequestOptions;
 use Jooservices\XcrawlerClient\Tests\TestCase;
+use Jooservices\XcrawlerClient\Settings\RequestOptions;
 use Jooservices\XcrawlerClient\XCrawlerClient;
 use Symfony\Component\DomCrawler\Crawler;
 

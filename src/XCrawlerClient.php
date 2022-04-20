@@ -9,7 +9,6 @@ use Jooservices\XcrawlerClient\Interfaces\SettingsContainerInterface;
 use Jooservices\XcrawlerClient\Interfaces\XCrawlerClientInterface;
 use Jooservices\XcrawlerClient\Settings\RequestOptions;
 use Psr\Http\Message\ResponseInterface;
-use ReflectionObject;
 
 /**
  * Wrapped factory to make request with customized options

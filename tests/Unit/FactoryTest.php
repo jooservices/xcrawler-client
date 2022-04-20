@@ -1,16 +1,16 @@
 <?php
 
-namespace Jooservices\XcrawlerClient\Tests;
+namespace Jooservices\XcrawlerClient\Tests\Unit;
 
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use Jooservices\XcrawlerClient\Factory;
+use Jooservices\XcrawlerClient\Tests\TestCase;
 use Kevinrob\GuzzleCache\CacheEntry;
 use Kevinrob\GuzzleCache\CacheMiddleware;
 use Kevinrob\GuzzleCache\Storage\FlysystemStorage;
 use Kevinrob\GuzzleCache\Strategy\PrivateCacheStrategy;
 use League\Flysystem\Adapter\Local;
-use LogicException;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
