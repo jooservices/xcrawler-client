@@ -28,6 +28,7 @@ class Factory
     private array $options;
     private Client $client;
     private array $history = [];
+    private LoggerInterface $logger;
 
     public function __construct(public ?int $fakeResponseCode = null)
     {
