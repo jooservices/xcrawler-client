@@ -2,6 +2,8 @@
 
 namespace Jooservices\XcrawlerClient\Interfaces;
 
+use Exception;
+use JsonException;
 use JsonSerializable;
 
 /**
@@ -87,8 +89,8 @@ interface SettingsContainerInterface extends JsonSerializable
      *
      * @return SettingsContainerInterface
      *
-     * @throws \Exception
-     * @throws \JsonException
+     * @throws Exception
+     * @throws JsonException
      */
     public function fromJSON(string $json): SettingsContainerInterface;
 }

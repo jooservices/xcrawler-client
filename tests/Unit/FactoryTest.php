@@ -28,12 +28,12 @@ class FactoryTest extends TestCase
         parent::setUp();
 
         $this->logger = $this->createMock(LoggerInterface::class);
-        $this->factory = new Factory($this->logger, 200);
+        $this->factory = new Factory(200);
     }
 
     public function test_request_error()
     {
-        $factory = new Factory($this->logger, $this->faker->numberBetween(400, 599));
+        $factory = new Factory($this->faker->numberBetween(400, 599));
         $client = $factory->make();
         $this->expectException(RequestException::class);
         $client->request('GET', $this->faker->url);
@@ -46,7 +46,7 @@ class FactoryTest extends TestCase
     public function test_with_logging(string $level)
     {
         $url = $this->faker->url;
-        $client = $this->factory->enableLogging('log request: {method} {uri}', $level)->make();
+        $client = $this->factory->enableLogging($this->logger, 'log request: {method} {uri}', $level)->make();
         $this->logger->expects($this->once())
             ->method('log')
             ->with(constant('Psr\\Log\\LogLevel::' . strtoupper($level)), 'log request: GET ' . $url);
@@ -100,7 +100,7 @@ class FactoryTest extends TestCase
 
     public function test_retries_with_higher_min_error_code()
     {
-        $factory = new Factory($this->logger, 202);
+        $factory = new Factory(202);
         $client = $factory->enableRetries(2, 0.001, 200)->make();
         $client->request('get', $this->faker->url);
         $this->assertEquals(0, count($this->factory->getHistory($client)));
@@ -108,18 +108,11 @@ class FactoryTest extends TestCase
 
     public function test_get_status_code()
     {
-        $factory = new Factory($this->logger, 202);
+        $factory = new Factory( 202);
         $client = $factory->enableRetries(2, 0.001, 200)->make();
         $response = $client->request('get', $this->faker->url);
         $this->assertEquals(202, $response->getStatusCode());
         $this->assertEquals(0, count($this->factory->getHistory($client)));
-    }
-
-    public function test_exception_with_no_logger_instance()
-    {
-        $factory = new Factory(null, 200);
-        $this->expectException(LogicException::class);
-        $factory->enableLogging();
     }
 
     public function test_with_cache()
@@ -132,7 +125,7 @@ class FactoryTest extends TestCase
             )
         );
 
-        $factory = new Factory($this->logger, 200);
+        $factory = new Factory(200);
         $client = $factory->enableCache($cache)->make();
         $client->request('GET', $url);
 

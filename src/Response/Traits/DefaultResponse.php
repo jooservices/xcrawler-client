@@ -139,5 +139,4 @@ trait DefaultResponse
     {
         return $this->body;
     }
-
 }

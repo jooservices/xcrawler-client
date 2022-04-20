@@ -15,7 +15,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
-
 /**
  * Wrapper for Guzzle Http Client
  */
@@ -30,7 +29,7 @@ class Factory
     private Client $client;
     private array $history = [];
 
-    public function __construct(public ?LoggerInterface $logger = null, public ?int $fakeResponseCode = null)
+    public function __construct(public ?int $fakeResponseCode = null)
     {
         $this->reset();
     }
@@ -42,11 +41,9 @@ class Factory
         return $this;
     }
 
-    public function enableLogging(string $format = Formatter::DEFAULT_FORMAT, string $level = LogLevel::INFO): self
+    public function enableLogging(LoggerInterface $logger, string $format = Formatter::DEFAULT_FORMAT, string $level = LogLevel::INFO): self
     {
-        if ($this->logger === null) {
-            throw new LogicException('In order to use logging a Logger instance must be provided to the Factory');
-        }
+        $this->logger = $logger;
 
         return $this->withMiddleware(
             Middleware::log($this->logger, new MessageFormatter($format), $level),
